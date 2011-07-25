@@ -43,7 +43,8 @@ downloadAsync = amap (simpleHTTP . getRequest) sites
 
 ```
 
-downloadAsync will download much faster than mapM
+`amap` will download much faster than `mapM` in this case, try switching `amap`
+with `mapM` to compare.
 
 ## amapS
 
