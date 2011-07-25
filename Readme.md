@@ -69,3 +69,16 @@ This sets a 2 second timeout (argument is in microseconds) for each IO function,
 returning `Left Timeout` if it takes longer. If any exception was thrown during
 the async call it is caught as `Left (Exception e)` where e is `SomeException`.
 Successful results are returned in Either's `Right` constructor.
+
+# Data Types
+
+## AsyncError
+
+Holds errors for `amapS`
+
+```haskell
+
+data AsyncError = Timeout
+                | Exception SomeException
+
+```
