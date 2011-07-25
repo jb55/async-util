@@ -15,7 +15,9 @@ cabal install
 
 ## amap
 
-    amap :: (a -> IO b) -> [a] -> IO [b]
+```haskell
+amap :: (a -> IO b) -> [a] -> IO [b]
+```
 
 amap maps a function over a list asyncronously, spawning each function as an
 efficient green thread provided by GHC's runtime system.
@@ -45,7 +47,9 @@ downloadAsync will download much faster than mapM
 
 ## amapS
 
-    amapS :: Int -> (a -> IO b) -> [a] -> IO [Either AsyncError b]
+```haskell
+amapS :: Int -> (a -> IO b) -> [a] -> IO [Either AsyncError b]
+```
 
 `amapS` is a much safer version of `amap`. It allows you to set a timeout for
 each call and catches any exceptions/timeouts into Either's Left constructor.
