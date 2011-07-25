@@ -22,12 +22,13 @@ amap :: (a -> IO b) -> [a] -> IO [b]
 amap maps a function over a list asyncronously, spawning each function as an
 efficient green thread provided by GHC's runtime system.
 
-Here's an example where we download 20 webpages all at the same time using
+Here's an example where we download 3 webpages all at the same time using
 Network.HTTP:
 
 ```haskell
 
 import Network.HTTP
+import Network.Stream
 import Control.Async.Util
 
 sites :: [String]
