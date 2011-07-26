@@ -13,13 +13,13 @@ cabal install
 
 # Functions
 
-## amap
+## mapA
 
 ```haskell
-amap :: (a -> IO b) -> [a] -> IO [b]
+mapA :: (a -> IO b) -> [a] -> IO [b]
 ```
 
-amap maps a function over a list asyncronously, spawning each function as an
+mapA maps a function over a list asyncronously, spawning each function as an
 efficient green thread provided by GHC's runtime system.
 
 Here's an example where we download 3 webpages all at the same time using
@@ -40,20 +40,20 @@ sites = [ "http://google.com"
 type HttpResult = Result (Response String)
 
 downloadAsync :: IO [HttpResult]
-downloadAsync = amap (simpleHTTP . getRequest) sites
+downloadAsync = mapA (simpleHTTP . getRequest) sites
 
 ```
 
-`amap` will download much faster than `mapM` in this case, try switching `amap`
+`mapA` will download much faster than `mapM` in this case, try switching `mapA`
 with `mapM` to compare.
 
-## amapS
+## mapAS
 
 ```haskell
-amapS :: Int -> (a -> IO b) -> [a] -> IO [Either AsyncError b]
+mapAS :: Int -> (a -> IO b) -> [a] -> IO [Either AsyncError b]
 ```
 
-`amapS` is a much safer version of `amap`. It allows you to set a timeout for
+`mapAS` is a much safer version of `mapA`. It allows you to set a timeout for
 each call and catches any exceptions/timeouts into Either's Left constructor.
 
 Example:
@@ -61,7 +61,7 @@ Example:
 ```haskell
 
 safeDownloadAsync :: IO [Either AsyncError HttpResult]
-safeDownloadAsync = amapS 2000000 (simpleHTTP . getRequest) sites
+safeDownloadAsync = mapAS 2000000 (simpleHTTP . getRequest) sites
 
 ```
 
@@ -74,7 +74,7 @@ Successful results are returned in Either's `Right` constructor.
 
 ## AsyncError
 
-Holds errors for `amapS`
+Holds errors for `mapAS`
 
 ```haskell
 
